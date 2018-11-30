@@ -4,7 +4,7 @@ class InvitesController < ApplicationController
 	include Response
 	
 	def index 
-		@invites = Invite.all
+		@invites = Invite.search(params[:search])
 		json_response(@invites)
 	end
 
@@ -15,11 +15,6 @@ class InvitesController < ApplicationController
 
     def show
     	json_response(@invite)
-  	end
-
-  	#/invites/search/<name>
-  	def search
-  		Invite.find_by!(name:, params[:name])
   	end
 
   	def update
@@ -36,7 +31,7 @@ class InvitesController < ApplicationController
 
   	def todo_params
     	# whitelist params
-    	params.permit(:name)
+    	params.permit(:name, :search)
   	end
 
 	def set_invite
